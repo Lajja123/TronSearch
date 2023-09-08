@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+.home-page {
+  position: relative;
+  height: 100vh; /* Ensures the button stays at the bottom of the viewport */
+}
+
+.search-btn {
+  position: absolute;
+  bottom: 10px; /* Adjust the distance from the bottom as needed */
+  right: 10px; /* Adjust the distance from the right as needed */
+  padding: 10px 20px; /* Add padding for the button */
+  background-color: #007bff; /* Customize button styles as needed */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.home-page:hover .search-widget {
+  display: block; /* Display the widget when hovering over the home page */
+}

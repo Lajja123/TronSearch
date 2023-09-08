@@ -1,0 +1,56 @@
+.search-widget {
+  position: absolute;
+  bottom: 50px; /* Adjust the distance above the button as needed */
+  right: 10px; /* Adjust the horizontal position as needed */
+  background-color: #fff; /* Customize widget background color as needed */
+  border: 1px solid #ccc; /* Customize widget border as needed */
+  padding: 10px;
+  display: none; /* Initially hide the widget */
+  display: block;
+  width: 50%;
+  max-width: 400px;
+  min-width: 250px;
+}
+.w-sec1-flex {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0px;
+}
+.w-sec2-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-top: 1px solid #ccc; /* Add a border between the sections */
+}
+
+select {
+  width: 100px; /* Adjust the width as needed */
+  padding: 5px;
+  margin-right: 10px;
+}
+
+input[type="text"] {
+  flex-grow: 1; /* Allow the input to grow and take available space */
+  padding: 5px;
+}
+
+.search-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}
+.search-widget.open {
+  display: block; /* Display the widget when it's open */
+}
+
+.search-widget.closed {
+  display: none; /* Hide the widget when it's closed */
+}

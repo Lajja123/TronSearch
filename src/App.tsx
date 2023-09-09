@@ -13,7 +13,7 @@ function App() {
   return (
     <div className="App">
       <div className="home-page">
-        <button className="search-btn" onClick={openWidget}>
+        <button className="search-btn " onClick={openWidget}>
           Click
         </button>
         {showWidget && <Widget />}

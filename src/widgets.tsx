@@ -43,8 +43,8 @@ const Widget: React.FC = () => {
           Search
         </button>
       </div>
-      {selectedOption === "option1" && <AddressWidget />}
-      {selectedOption === "option2" && <HashWidget />}
+      {selectedOption === "option2" && <AddressWidget />}
+      {selectedOption === "option3" && <HashWidget />}
     </div>
   );
 };

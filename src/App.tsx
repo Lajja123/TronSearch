@@ -7,16 +7,18 @@ function App() {
   const [showWidget, setShowWidget] = useState(false);
 
   const openWidget = () => {
-    setShowWidget(!showWidget);
+    setShowWidget(true);
   };
 
   return (
     <div className="App">
       <div className="home-page">
-        <button className="search-btn " onClick={openWidget}>
+        <button className="search-btn" onClick={openWidget}>
           Click
         </button>
-        {showWidget && <Widget />}
+        {showWidget && (
+          <Widget showWidget={showWidget} setShowWidget={setShowWidget} />
+        )}
       </div>
     </div>
   );

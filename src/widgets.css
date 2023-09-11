@@ -4,53 +4,187 @@
   right: 10px; /* Adjust the horizontal position as needed */
   background-color: #fff; /* Customize widget background color as needed */
   border: 1px solid #ccc; /* Customize widget border as needed */
-  padding: 10px;
+  padding: 20px;
   display: none; /* Initially hide the widget */
-  display: block;
   width: 50%;
-  max-width: 400px;
+  max-width: 450px;
   min-width: 250px;
+  background-color: #18141d;
+  border-radius: 12px;
+  box-shadow: 0px 0px 10px 0px rgb(0 0 0 / 50%);
+}
+.search-widget::before {
+  animation: animatedgradient 3s ease infinite alternate;
+  left: -4px;
+  position: absolute;
+  top: -4px;
+  width: calc(100% + 8px);
+  background: linear-gradient(
+    60deg,
+    #ffb46a,
+    #ff9984,
+    #ff84a7,
+    #f09eff,
+    #97baff,
+    #7bedff,
+    #93fff1,
+    #a1ffb8
+  );
+  background-size: 300% 300%;
+  border-radius: 12px;
+  content: "";
+  z-index: -1;
+  height: calc(100% + 8px);
+}
+
+/* Keyframes for Animation */
+@keyframes animatedgradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
 }
 .w-sec1-flex {
   display: flex;
   justify-content: space-between;
   padding: 20px 0px;
+  border-bottom: 1px solid #fff;
 }
 .w-sec2-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
-  border-top: 1px solid #ccc; /* Add a border between the sections */
+  display: grid;
+  grid-template-columns: auto 120px;
+  gap: 3px;
+  padding: 20px 5px;
+  width: 100%;
 }
 
 select {
   width: 100px; /* Adjust the width as needed */
   padding: 5px;
   margin-right: 10px;
+  background-color: #20293a;
+  border: none;
+  color: #ffffff;
+  border-radius: 2px;
+  outline: none;
+  height: 30px;
 }
 
 input[type="text"] {
   flex-grow: 1; /* Allow the input to grow and take available space */
-  padding: 5px;
-}
-
-.search-button {
-  background-color: #007bff;
-  color: #fff;
+  padding: 10px;
+  background-color: #20293a;
   border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  padding: 5px 10px;
+  border-radius: 2px;
+  outline: none;
+  color: #ffffff;
+  height: 30px;
 }
 
-.search-button:hover {
-  background-color: #0056b3;
+/* Button Styles */
+.search-button {
+  /* background-color: initial; */
+  background: transparent;
+  border-radius: 5px;
+  color: #18141d;
+  flex: 0 0 90px;
+  letter-spacing: 0.5px;
+  width: 85%;
+  padding: 10px 5px;
+
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  z-index: 1;
+  position: relative; /* You may need this line */
 }
-.search-widget.open {
+
+/* Button Background Animation */
+.search-button::before {
+  content: "";
+  animation: animatedgradient 3s ease infinite alternate;
+  left: -4px;
+  position: absolute;
+  top: -4px;
+  width: calc(100% + 8px);
+  background: linear-gradient(
+    60deg,
+    #ffb46a,
+    #ff9984,
+    #ff84a7,
+    #f09eff,
+    #97baff,
+    #7bedff,
+    #93fff1,
+    #a1ffb8
+  );
+  background-size: 300% 300%;
+  border-radius: 12px;
+  content: "";
+  z-index: -1;
+  height: calc(100% + 8px);
+}
+
+/* Keyframes for Animation */
+@keyframes animatedgradient {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+.close-button {
+  /* background-color: initial; */
+  background: transparent;
+  border-radius: 5px;
+  color: #18141d;
+  flex: 0 0 90px;
+  letter-spacing: 0.5px;
+  width: 85%;
+  padding: 10px 5px;
+
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+  z-index: 1;
+  position: relative; /* You may need this line */
+}
+.close-button::before {
+  content: "";
+  animation: animatedgradient 3s ease infinite alternate;
+  left: -4px;
+  position: absolute;
+  top: -4px;
+  width: calc(100% + 8px);
+  background: linear-gradient(
+    60deg,
+    #ffb46a,
+    #ff9984,
+    #ff84a7,
+    #f09eff,
+    #97baff,
+    #7bedff,
+    #93fff1,
+    #a1ffb8
+  );
+  background-size: 300% 300%;
+  border-radius: 12px;
+  content: "";
+  z-index: -1;
+  height: calc(100% + 8px);
+}
+
+#search-widget.open {
   display: block; /* Display the widget when it's open */
 }
 
-.search-widget.closed {
+#search-widget.closed {
   display: none; /* Hide the widget when it's closed */
+}
+
+.close-button:hover {
+  background-color: red;
 }

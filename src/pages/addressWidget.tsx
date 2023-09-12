@@ -86,6 +86,25 @@ const AddressWidget: React.FC = () => {
 
     // Add more voter data objects as needed
   ];
+  const transactionData = [
+    {
+      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
+    },
+    {
+      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
+    },
+    {
+      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
+    },
+    {
+      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
+    },
+    {
+      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
+    },
+
+    // Add more voter data objects as needed
+  ];
   const dataSource = selectedDataSource === "From" ? addDataFrom : addDataTo;
 
   return (
@@ -120,6 +139,24 @@ const AddressWidget: React.FC = () => {
         <div className="info-item">
           <div className="info-lable">Energy:</div>
           <div className="info-response-data">{addData.energy}</div>
+        </div>
+        <div className="info-item2">
+          <div className="info-lable">Transactions</div>
+          <div className="" id="transaction-table">
+            {transactionData.map((data, index) => (
+              <div key={index}>
+                <div
+                  style={{
+                    padding: "5px",
+                    fontSize: "13px",
+                    color: "#ffb46a",
+                  }}
+                >
+                  {data.transaction_address}
+                </div>
+              </div>
+            ))}{" "}
+          </div>
         </div>
         <div className="info-item2">
           <div className="info-lable">Delegated</div>

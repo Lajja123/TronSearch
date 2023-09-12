@@ -24,7 +24,7 @@
   min-height: 70px;
   height: 120px;
   overflow: scroll;
-  overflow-x: visible;
+  overflow-x: hidden;
 }
 .voter-flex {
   display: flex;
@@ -48,4 +48,16 @@ table {
 #voter-table {
   width: 70%;
   margin: 0 auto;
+}
+
+/* ................ */
+#transaction-table {
+  width: 80%;
+  margin: 0 auto;
+  font-size: 13px;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin-top: 10px;
+  border: 1px solid gray;
+  height: 80px;
 }

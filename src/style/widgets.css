@@ -4,10 +4,13 @@
   right: 10px; /* Adjust the horizontal position as needed */
   background-color: #fff; /* Customize widget background color as needed */
   border: 1px solid #ccc; /* Customize widget border as needed */
-  /* padding: 20px; */
+  padding: 20px;
   display: none; /* Initially hide the widget */
   width: 50%;
   max-width: 450px;
+  height: 500px;
+  overflow: scroll;
+  overflow-x: hidden;
   min-width: 250px;
   background-color: #18141d;
   border-radius: 12px;

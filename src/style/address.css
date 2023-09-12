@@ -1,0 +1,51 @@
+.info-item2 {
+  /* border: 1px solid gray; */
+  padding: 5px;
+}
+.info-sub-flex {
+  display: flex;
+  width: 30%;
+  justify-content: space-around;
+}
+.subflex-title {
+  background-color: black;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+}
+.subflex-title.active {
+  background-color: #007bff; /* Change to your desired active tab color */
+  color: white; /* Change to your desired text color for active tab */
+}
+.subflex-data-main {
+  display: flex;
+  justify-content: center;
+  min-height: 70px;
+  height: 120px;
+  overflow: scroll;
+  overflow-x: visible;
+}
+.voter-flex {
+  display: flex;
+  justify-content: space-around;
+}
+table tr th {
+  font-size: 15px;
+  padding: 8px;
+  border-bottom: 1px solid gray;
+  background-color: black;
+}
+table tr td {
+  font-size: 12px;
+  padding: 8px;
+}
+table {
+  width: 100%;
+  border: 1px solid gray;
+  margin: 10px 0px;
+}
+#voter-table {
+  width: 70%;
+  margin: 0 auto;
+}

@@ -51,6 +51,19 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  animation: zoomInOut 0.5s; /* Adjust the duration as needed */
+  animation-fill-mode: forwards;
+}
+@keyframes zoomInOut {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1); /* Increase to your desired zoom level */
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 .home-page:hover .search-widget {
   display: block; /* Display the widget when hovering over the home page */

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import jsonData from "./json/hash";
-import "../src/hash.css";
+import jsonData from "../json/hash";
+import "../style/hash.css";
 
 interface HashDetailsProps {
   hash: string;

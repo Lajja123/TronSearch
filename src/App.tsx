@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import Widget from "./widgets";
+import Widget from "./pages/widgets";
 
 function App() {
   const [showWidget, setShowWidget] = useState(false);
@@ -16,6 +16,7 @@ function App() {
         <button className="search-btn" onClick={openWidget}>
           Click
         </button>
+
         {showWidget && (
           <Widget showWidget={showWidget} setShowWidget={setShowWidget} />
         )}

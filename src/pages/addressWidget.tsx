@@ -89,20 +89,22 @@ const AddressWidget: React.FC = () => {
   const transactionData = [
     {
       transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
+      transaction_block: "	53991953",
+      transaction_status: "CONFIRMED",
+      transaction_timestamp: "2023-08-21 11:47:36",
     },
     {
       transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
+      transaction_block: "	53991953",
+      transaction_status: "CONFIRMED",
+      transaction_timestamp: "2023-08-21 11:47:36",
     },
     {
       transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
+      transaction_block: "	53991953",
+      transaction_status: "CONFIRMED",
+      transaction_timestamp: "2023-08-21 11:47:36",
     },
-    {
-      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-    },
-    {
-      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-    },
-
     // Add more voter data objects as needed
   ];
   const dataSource = selectedDataSource === "From" ? addDataFrom : addDataTo;
@@ -144,15 +146,82 @@ const AddressWidget: React.FC = () => {
           <div className="info-lable">Transactions</div>
           <div className="" id="transaction-table">
             {transactionData.map((data, index) => (
-              <div key={index}>
-                <div
-                  style={{
-                    padding: "5px",
-                    fontSize: "13px",
-                    color: "#ffb46a",
-                  }}
-                >
-                  {data.transaction_address}
+              <div key={index} className="transaction-flex-main">
+                <div className="transaction-flex">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>Hash:</div>
+                    <div
+                      style={{
+                        padding: "5px",
+                        fontSize: "13px",
+                        color: "#ffb46a",
+                      }}
+                    >
+                      {truncateAddress(data.transaction_address)}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    {/* <div>Timestamp</div> */}
+                    <div
+                      style={{
+                        padding: "5px",
+                        fontSize: "13px",
+                        color: "lightgray",
+                      }}
+                    >
+                      {data.transaction_timestamp}
+                    </div>
+                  </div>
+                </div>
+                <div className="transaction-flex">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>Block:</div>
+                    <div
+                      style={{
+                        padding: "5px",
+                        fontSize: "13px",
+                        color: "lightgray",
+                      }}
+                    >
+                      {data.transaction_block}
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                    }}
+                  >
+                    <div>Status:</div>
+                    <div
+                      style={{
+                        padding: "5px",
+                        fontSize: "13px",
+                        color: "#73bb73",
+                      }}
+                    >
+                      {data.transaction_status}
+                    </div>
+                  </div>
                 </div>
               </div>
             ))}{" "}

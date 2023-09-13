@@ -52,12 +52,29 @@ table {
 
 /* ................ */
 #transaction-table {
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
   font-size: 13px;
   overflow: scroll;
+  /* display: flex; */
   overflow-x: hidden;
   margin-top: 10px;
   border: 1px solid gray;
   height: 80px;
+}
+.transaction-flex-main {
+  display: flex;
+  height: 65px;
+  border-bottom: 1px solid gray;
+  margin: 0 auto;
+  padding: 0px 10px;
+  justify-content: space-between;
+}
+
+.transaction-flex {
+  display: flex;
+  height: 65px;
+  text-align: start;
+  flex-direction: column;
+  justify-content: space-around;
 }

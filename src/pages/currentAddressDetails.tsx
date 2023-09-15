@@ -7,10 +7,6 @@ interface HashDetailsProps {
   hash: string;
 }
 
-interface APIData {
-  address: string;
-}
-
 function truncateAddress(address: string): string {
   if (address.length <= 15) {
     return address;
@@ -27,6 +23,7 @@ const CurrentAddressDetails: React.FC = () => {
 
   const [basicData, setBasicData] = useState<any>();
   const [resourceData, setResourceData] = useState<any>();
+  const [transactionsData, setTransactionsData] = useState<any>();
 
   // From|To data
   const [selectedDataSource, setSelectedDataSource] = useState("From");
@@ -34,91 +31,7 @@ const CurrentAddressDetails: React.FC = () => {
     setSelectedDataSource(newDataSource);
   };
 
-  const addDataFrom = [
-    {
-      address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      energy: "Available: 8,393,982 / 8,393,982",
-      bandwidth: "Available: 11,338,014 / 11,529,981",
-    },
-    {
-      address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      energy: "Available: 8,393,982 / 8,393,982",
-      bandwidth: "Available: 11,338,014 / 11,529,981",
-    },
-    {
-      address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      energy: "Available: 8,393,982 / 8,393,982",
-      bandwidth: "Available: 11,338,014 / 11,529,981",
-    },
-    {
-      address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      energy: "Available: 8,393,982 / 8,393,982",
-      bandwidth: "Available: 11,338,014 / 11,529,981",
-    },
-    {
-      address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      energy: "Available: 8,393,982 / 8,393,982",
-      bandwidth: "Available: 11,338,014 / 11,529,981",
-    },
-    // Add more "From" data objects as needed
-  ];
-
-  const addDataTo = [
-    {
-      address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      energy: "Available: 8,393,982 / 8,393,982",
-      bandwidth: "Available: 11,338,014 / 11,529,981",
-    },
-    {
-      address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      energy: "Available: 8,393,982 / 8,393,982",
-      bandwidth: "Available: 11,338,014 / 11,529,981",
-    },
-    {
-      address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      energy: "Available: 8,393,982 / 8,393,982",
-      bandwidth: "Available: 11,338,014 / 11,529,981",
-    },
-    // Add more "To" data objects as needed
-  ];
-  const voterData = [
-    {
-      voter_add: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      voter_count: "Voted: 0/0",
-    },
-    {
-      voter_add: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      voter_count: "Voted: 0/0",
-    },
-    {
-      voter_add: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      voter_count: "Voted: 0/0",
-    },
-
-    // Add more voter data objects as needed
-  ];
-  const transactionData = [
-    {
-      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      transaction_block: "	53991953",
-      transaction_status: "CONFIRMED",
-      transaction_timestamp: "2023-08-21 11:47:36",
-    },
-    {
-      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      transaction_block: "	53991953",
-      transaction_status: "CONFIRMED",
-      transaction_timestamp: "2023-08-21 11:47:36",
-    },
-    {
-      transaction_address: "TKpn4QSQ6Q1fKkF67Ljz2qmnskrLXGi9tP",
-      transaction_block: "	53991953",
-      transaction_status: "CONFIRMED",
-      transaction_timestamp: "2023-08-21 11:47:36",
-    },
-    // Add more voter data objects as needed
-  ];
-  const dataSource = selectedDataSource === "From" ? addDataFrom : addDataTo;
+  // const dataSource = selectedDataSource === "From" ? addDataFrom : addDataTo;
 
   // call the apis to get the account data
   const getCurrentAccountData = async () => {
@@ -141,8 +54,21 @@ const CurrentAddressDetails: React.FC = () => {
       console.log(resData);
       setBasicData(resData);
 
-      // call the api to get resources
+      // call the api to get all the transactions of the account
+      const txResoponse = await fetch(
+        "https://api.trongrid.io/v1/accounts/TK2HxDagVEKk9vykJZbpqB7P1EVANJvkhY/transactions",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const txResoponseData = await txResoponse.json();
+      console.log(txResoponseData.data);
+      setTransactionsData(txResoponseData.data);
 
+      // call the api to get resources
       const resourcesResoponse = await fetch(
         "https://api.trongrid.io/wallet/getaccountresource",
         {
@@ -159,7 +85,6 @@ const CurrentAddressDetails: React.FC = () => {
       const resourcesData = await resourcesResoponse.json();
       console.log(resourcesData);
       setResourceData(resourcesData);
-      // console.log(resourcesData.EnergyLimit);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -184,125 +109,142 @@ const CurrentAddressDetails: React.FC = () => {
           <div className="info-item">
             <div className="info-lable">Balance:</div>
             <div className="info-response-data result-color">
-              {basicData.balance} SUN
+              {basicData.balance ? basicData.balance / 10 ** 6 : 0} TRX
             </div>
           </div>
           <div className="info-item">
-            <div className="info-lable">Allowance:</div>
-            <div className="info-response-data">{basicData.allowance}</div>
-          </div>
-          <div className="info-item">
             <div className="info-lable">Create_Time:</div>
-            <div className="info-response-data">{basicData.create_time}</div>
-          </div>
-          <div className="info-item">
-            <div className="info-lable">Energy:</div>
-            <div className="info-response-data">{resourceData.EnergyLimit}</div>
+            <div className="info-response-data">
+              {basicData.create_time ? basicData.create_time : "Not Active"}
+            </div>
           </div>
           <div className="info-item">
             <div className="info-lable">Bandwidth:</div>
             <div className="info-response-data">
-              {resourceData.freeNetLimit}
+              Available:{" "}
+              {resourceData.NetLimit && resourceData.freeNetUsed
+                ? resourceData.freeNetLimit +
+                  resourceData.NetLimit -
+                  resourceData.freeNetUsed
+                : resourceData.NetLimit
+                ? resourceData.freeNetLimit + resourceData.NetLimit
+                : resourceData.freeNetUsed
+                ? resourceData.freeNetLimit - resourceData.freeNetUsed
+                : resourceData.freeNetLimit
+                ? resourceData.freeNetLimit
+                : 0}
+              /
+              {resourceData.NetLimit
+                ? resourceData.freeNetLimit + resourceData.NetLimit
+                : resourceData.freeNetLimit
+                ? resourceData.freeNetLimit
+                : 0}
             </div>
           </div>
           <div className="info-item">
-            <div className="info-lable">Tron power:</div>
+            <div className="info-lable">Energy:</div>
             <div className="info-response-data">
-              {resourceData.tronPowerLimit}
+              Available:{" "}
+              {resourceData.EnergyLimit ? resourceData.EnergyLimit : 0}/
+              {resourceData.EnergyLimit ? resourceData.EnergyLimit : 0}
             </div>
           </div>
           <div className="info-item">
-            <div className="info-lable">Tron power used:</div>
+            <div className="info-lable">Votes:</div>
             <div className="info-response-data">
-              {resourceData.tronPowerUsed}
+              Voted:
+              {resourceData.tronPowerUsed ? resourceData.tronPowerUsed : "0"}/
+              {resourceData.tronPowerLimit ? resourceData.tronPowerLimit : "0"}
             </div>
           </div>
           <div className="info-item2">
             <div className="info-lable">Transactions</div>
             <div className="" id="transaction-table">
-              {transactionData.map((data, index) => (
-                <div key={index} className="transaction-flex-main">
-                  <div className="transaction-flex">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div>Hash:</div>
-                      <div
-                        style={{
-                          padding: "5px",
-                          fontSize: "13px",
-                          color: "#ffb46a",
-                        }}
-                      >
-                        {truncateAddress(data.transaction_address)}
+              {transactionsData.length > 0
+                ? transactionsData.map((data: any, index: any) => (
+                    <div key={index} className="transaction-flex-main">
+                      <div className="transaction-flex">
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div>Hash:</div>
+                          <div
+                            style={{
+                              padding: "5px",
+                              fontSize: "13px",
+                              color: "#ffb46a",
+                            }}
+                          >
+                            {truncateAddress(data.txID)}
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div>Timestamp:</div>
+                          <div
+                            style={{
+                              padding: "5px",
+                              fontSize: "13px",
+                              color: "lightgray",
+                            }}
+                          >
+                            {data.block_timestamp}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="transaction-flex">
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div>Block:</div>
+                          <div
+                            style={{
+                              padding: "5px",
+                              fontSize: "13px",
+                              color: "lightgray",
+                            }}
+                          >
+                            {data.blockNumber}
+                          </div>
+                        </div>
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                          }}
+                        >
+                          <div>Status:</div>
+                          <div
+                            style={{
+                              padding: "5px",
+                              fontSize: "13px",
+                              color: "#73bb73",
+                            }}
+                          >
+                            {data.ret[0].contractRet}
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      {/* <div>Timestamp</div> */}
-                      <div
-                        style={{
-                          padding: "5px",
-                          fontSize: "13px",
-                          color: "lightgray",
-                        }}
-                      >
-                        {data.transaction_timestamp}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="transaction-flex">
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div>Block:</div>
-                      <div
-                        style={{
-                          padding: "5px",
-                          fontSize: "13px",
-                          color: "lightgray",
-                        }}
-                      >
-                        {data.transaction_block}
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                      }}
-                    >
-                      <div>Status:</div>
-                      <div
-                        style={{
-                          padding: "5px",
-                          fontSize: "13px",
-                          color: "#73bb73",
-                        }}
-                      >
-                        {data.transaction_status}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}{" "}
+                  ))
+                : "No transactions yet!"}{" "}
             </div>
           </div>
-          <div className="info-item2">
+          {/* <div className="info-item2">
             <div className="info-lable">Delegated</div>
             <div style={{ marginTop: "20px" }}>
               <div className="info-sub-flex">
@@ -340,7 +282,7 @@ const CurrentAddressDetails: React.FC = () => {
                 </tbody>
               </table>
             </div>
-          </div>
+          </div> */}
           <div className="info-item2">
             <div className="info-lable">Votes</div>
             <table className="subflex-data-main" id="voter-table">
@@ -349,12 +291,14 @@ const CurrentAddressDetails: React.FC = () => {
                   <th>Voter_address</th>
                   <th>Voter_count</th>
                 </tr>
-                {voterData.map((data, index) => (
-                  <tr key={index}>
-                    <td>{truncateAddress(data.voter_add)}</td>
-                    <td>{truncateAddress(data.voter_count)}</td>
-                  </tr>
-                ))}{" "}
+                {basicData.votes
+                  ? basicData.votes.map((data: any, index: any) => (
+                      <tr key={index}>
+                        <td>{truncateAddress(data.vote_address)}</td>
+                        <td>{data.vote_count}</td>
+                      </tr>
+                    ))
+                  : "Have not done voting."}{" "}
               </tbody>
             </table>
           </div>

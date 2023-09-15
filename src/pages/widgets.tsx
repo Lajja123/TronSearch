@@ -13,6 +13,7 @@ const Widget: React.FC<WidgetProps> = ({ showWidget, setShowWidget }) => {
   // Set the initial state to true (open)
   const [selectedOption, setSelectedOption] = useState("");
   const [showDefaultWidgets, setShowDefaultWidgets] = useState(true);
+  const [inputValue, setInputValue] = useState("");
 
   const handleClose = () => {
     setShowWidget(false); // Set isOpen to false when the close button is clicked
@@ -42,9 +43,11 @@ const Widget: React.FC<WidgetProps> = ({ showWidget, setShowWidget }) => {
         <div className="w-sec2-flex">
           <input
             type="text"
+            id="inputText"
             placeholder=" Enter Address / Txn Hash "
-            onChange={handleSearchButtonClick}
+            onChange={(e) => setInputValue(e.target.value)}
             className="search-input"
+            value={inputValue}
           />
           <select>
             <option value="option1">Select...</option>
@@ -61,8 +64,12 @@ const Widget: React.FC<WidgetProps> = ({ showWidget, setShowWidget }) => {
 
       {showDefaultWidgets && <CurrentAddressDetails />}
 
-      {selectedOption === "option2" && !showDefaultWidgets && <AddressWidget />}
-      {selectedOption === "option3" && !showDefaultWidgets && <HashWidget />}
+      {selectedOption === "option2" && !showDefaultWidgets && (
+        <AddressWidget inputValue={inputValue} />
+      )}
+      {selectedOption === "option3" && !showDefaultWidgets && (
+        <HashWidget inputValue={inputValue} />
+      )}
     </div>
   );
 };

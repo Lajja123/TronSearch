@@ -3,17 +3,18 @@ import "../style/widgets.css";
 import HashWidget from "./hashWidget";
 import AddressWidget from "./addressWidget";
 import CurrentAddressDetails from "./currentAddressDetails";
+interface WidgetProps {}
 
-interface WidgetProps {
-  setShowWidget: React.Dispatch<React.SetStateAction<boolean>>;
-  showWidget: boolean;
-}
+const Widget: React.FC<WidgetProps> = () => {
+  const [showWidget, setShowWidget] = useState<boolean>(false);
 
-const Widget: React.FC<WidgetProps> = ({ showWidget, setShowWidget }) => {
+  const openWidget = () => {
+    setShowWidget(true);
+  };
   // Set the initial state to true (open)
-  const [selectedOption, setSelectedOption] = useState("");
-  const [showDefaultWidgets, setShowDefaultWidgets] = useState(true);
-  const [inputValue, setInputValue] = useState("");
+  const [selectedOption, setSelectedOption] = useState<string>("");
+  const [showDefaultWidgets, setShowDefaultWidgets] = useState<boolean>(true);
+  const [inputValue, setInputValue] = useState<string>("");
 
   const handleClose = () => {
     setShowWidget(false); // Set isOpen to false when the close button is clicked
@@ -29,48 +30,58 @@ const Widget: React.FC<WidgetProps> = ({ showWidget, setShowWidget }) => {
   };
 
   return (
-    <div
-      className={`search-widget ${showWidget ? "open" : "closed"}`}
-      id="search-widget"
-    >
-      <div className="w-sec1-flex">
-        <div style={{ color: "white" }}>Logo</div>
-        <button className="close-button" onClick={() => handleClose()}>
-          ✖
-        </button>
-      </div>
-      <div>
-        <div className="w-sec2-flex">
-          <input
-            type="text"
-            id="inputText"
-            placeholder=" Enter Address / Txn Hash "
-            onChange={(e) => setInputValue(e.target.value)}
-            className="search-input"
-            value={inputValue}
-          />
-          <select>
-            <option value="option1">Select...</option>
-            <option value="option2">Address</option>
-            <option value="option3">Hashvalue</option>
-          </select>
-        </div>
-        <div>
-          <button className="search-button" onClick={handleSearchButtonClick}>
-            Search
-          </button>
-        </div>
-      </div>
+    <>
+      <button className="search-btn" onClick={openWidget}>
+        Click
+      </button>
+      {showWidget ? (
+        <div
+          className={`search-widget ${showWidget ? "open" : "closed"}`}
+          id="search-widget"
+        >
+          <div className="w-sec1-flex">
+            <div style={{ color: "white" }}>Logo</div>
+            <button className="close-button" onClick={() => handleClose()}>
+              ✖
+            </button>
+          </div>
+          <div>
+            <div className="w-sec2-flex">
+              <input
+                type="text"
+                id="inputText"
+                placeholder=" Enter Address / Txn Hash "
+                onChange={(e) => setInputValue(e.target.value)}
+                className="search-input"
+                value={inputValue}
+              />
+              <select>
+                <option value="option1">Select...</option>
+                <option value="option2">Address</option>
+                <option value="option3">Hashvalue</option>
+              </select>
+            </div>
+            <div>
+              <button
+                className="search-button"
+                onClick={handleSearchButtonClick}
+              >
+                Search
+              </button>
+            </div>
+          </div>
 
-      {showDefaultWidgets && <CurrentAddressDetails />}
+          {showDefaultWidgets && <CurrentAddressDetails />}
 
-      {selectedOption === "option2" && !showDefaultWidgets && (
-        <AddressWidget inputValue={inputValue} />
-      )}
-      {selectedOption === "option3" && !showDefaultWidgets && (
-        <HashWidget inputValue={inputValue} />
-      )}
-    </div>
+          {selectedOption === "option2" && !showDefaultWidgets && (
+            <AddressWidget inputValue={inputValue} />
+          )}
+          {selectedOption === "option3" && !showDefaultWidgets && (
+            <HashWidget inputValue={inputValue} />
+          )}
+        </div>
+      ) : null}
+    </>
   );
 };
 

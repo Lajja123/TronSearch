@@ -94,7 +94,7 @@ const CurrentAddressDetails: React.FC = () => {
     getCurrentAccountData();
   }, []);
 
-  if (basicData && resourceData) {
+  if (basicData && resourceData && transactionsData) {
     return (
       <div className="hash-value-widget">
         <div className="title">Address Details</div>

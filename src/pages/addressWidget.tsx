@@ -93,7 +93,7 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
     getCurrentAccountData();
   }, []);
 
-  if (basicData && resourceData) {
+  if (basicData && resourceData && transactionsData) {
     return (
       <div className="hash-value-widget">
         <div className="title">Address Details</div>

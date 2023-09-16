@@ -36,6 +36,7 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
   const [basicData, setBasicData] = useState<any>();
   const [resourceData, setResourceData] = useState<any>();
   const [transactionsData, setTransactionsData] = useState<any>();
+  const [loading, setLoading] = useState<any>(true);
 
   const handleDataSourceChange = (newDataSource: string) => {
     setSelectedDataSource(newDataSource);
@@ -95,6 +96,7 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
       const resourcesData = await resourcesResponse.json();
       console.log(resourcesData);
       setResourceData(resourcesData);
+      setLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -170,13 +172,15 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
           <div className="info-item2">
             <div className="info-lable">Transactions</div>
             <table className="" id="transaction-table">
-              <tbody>
+              <thead>
                 <tr>
-                  <th>Hash</th>
-                  <th>Time</th>
-                  <th>Status</th>
-                  <th>Block</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Hash</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Timestamp</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Status</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Block</th>
                 </tr>
+                </thead>
+                <tbody>
               {transactionsData.length > 0
                 ? transactionsData.map((data: any, index: any) => (
                     <tr key={index} >
@@ -232,12 +236,14 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
         </div> */}
           <div className="info-item2">
             <div className="info-lable">Votes</div>
-            <table className="subflex-data-main" id="voter-table">
-              <tbody>
+            <table className="vote_table" id="voter-table">
+              <thead>
                 <tr>
-                  <th>Voter_address</th>
-                  <th>Voter_count</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Voter_address</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Voter_count</th>
                 </tr>
+                </thead>
+                <tbody>
                 {basicData.votes
                   ? basicData.votes.map((data: any, index: any) => (
                       <tr key={index}>
@@ -253,7 +259,9 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
       </div>
     );
   } else {
-    return <h1>Loading</h1>;
+    return  <div className="loader-container">
+    <img className="loader-spinner" src="loading.png"></img>
+  </div>;
   }
 };
 

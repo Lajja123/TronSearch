@@ -33,6 +33,7 @@ function truncateAdd(address: string): string {
 const HashWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
   const [transactionData, setTransactionData] = useState<any>();
   const [transactionInfo, setTransactionInfo] = useState<any>();
+  const [loading, setLoading] = useState<any>(true);
 
   const getTransactionData = async () => {
     try {
@@ -69,6 +70,7 @@ const HashWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
       const txResData = await txResponse.json();
       console.log(txResData);
       setTransactionInfo(txResData);
+      setLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -166,7 +168,9 @@ const HashWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
       </div>
     );
   } else {
-    return <h1>Loading</h1>;
+    return  <div className="loader-container">
+    <img className="loader-spinner" src="loading.png"></img>
+  </div>;
   }
 };
 

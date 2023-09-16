@@ -32,7 +32,7 @@ const Widget: React.FC<WidgetProps> = () => {
   return (
     <>
       <button className="search-btn" onClick={openWidget}>
-        Click
+        CLICK
       </button>
       {showWidget ? (
         <div
@@ -80,8 +80,11 @@ const Widget: React.FC<WidgetProps> = () => {
           {selectedOption === "option3" && !showDefaultWidgets && (
             <HashWidget inputValue={inputValue} />
           )}
+          <div style={{padding:"10px 0px", backgroundColor:"#20293a",fontSize:"10px",color:"white"}}>Powerd by Explorex</div>
         </div>
+        
       ) : null}
+      
     </>
   );
 };

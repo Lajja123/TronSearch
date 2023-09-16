@@ -34,6 +34,7 @@ const CurrentAddressDetails: React.FC = () => {
   const [basicData, setBasicData] = useState<any>();
   const [resourceData, setResourceData] = useState<any>();
   const [transactionsData, setTransactionsData] = useState<any>();
+  const [loading, setLoading] = useState<any>(true);
 
   // From|To data
   const [selectedDataSource, setSelectedDataSource] = useState("From");
@@ -95,6 +96,7 @@ const CurrentAddressDetails: React.FC = () => {
       const resourcesData = await resourcesResoponse.json();
       console.log(resourcesData);
       setResourceData(resourcesData);
+      setLoading(false);
     } catch (error) {
       console.error("Error:", error);
     }
@@ -104,6 +106,7 @@ const CurrentAddressDetails: React.FC = () => {
     getCurrentAccountData();
   }, []);
 
+  
   if (basicData && resourceData && transactionsData) {
     return (
       <div className="hash-value-widget">
@@ -170,34 +173,31 @@ const CurrentAddressDetails: React.FC = () => {
           <div className="info-item2">
             <div className="info-lable">Transactions</div>
             <table className="" id="transaction-table">
-              <tbody>
+              <thead>
                 <tr>
-                  <th>
-                    Hash
+                  <th aria-controls="dtHorizontalVerticalExample">Hash
                   </th>
-                  <th>Time</th>
-                  <th>Status</th>
-                  <th>Block</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Timestamp</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Status</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Block</th>
                 </tr>
-               {transactionsData.length > 0
+                </thead>
+              <tbody>
+                {transactionsData.length > 0
                 ? transactionsData.map((data: any, index: any) => (
                     <tr key={index}>
                         <td>
                             {truncateAddress(data.txID)}
                          </td>
-                    
                           <td>
                             {data.block_timestamp}
                           </td>
-                       
                           <td>
                             {data.blockNumber}
                           </td>
-                        
                           <td>
                             {data.ret[0].contractRet}
                           </td>
-                      
                     </tr>
                   ))
                 : "No transactions yet!"}
@@ -246,12 +246,14 @@ const CurrentAddressDetails: React.FC = () => {
           </div> */}
           <div className="info-item2">
             <div className="info-lable">Votes</div>
-            <table className="subflex-data-main" id="voter-table">
-              <tbody>
+            <table className="vote_table" id="voter-table">
+              <thead>
                 <tr>
-                  <th>Voter_address</th>
-                  <th>Voter_count</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Voter_address</th>
+                  <th aria-controls="dtHorizontalVerticalExample">Voter_count</th>
                 </tr>
+                </thead>
+                <tbody>
                 {basicData.votes
                   ? basicData.votes.map((data: any, index: any) => (
                       <tr key={index}>
@@ -267,7 +269,9 @@ const CurrentAddressDetails: React.FC = () => {
       </div>
     );
   } else {
-    return <h1>Loading</h1>;
+    return  <div className="loader-container">
+    <img className="loader-spinner" src="loading.png"></img>
+  </div>;
   }
 };
 

@@ -1,7 +1,7 @@
 .search-widget {
   position: absolute;
-  bottom: 50px; /* Adjust the distance above the button as needed */
-  right: 10px; /* Adjust the horizontal position as needed */
+  bottom: 0; /* Adjust the distance above the button as needed */
+  right: 0; /* Adjust the horizontal position as needed */
   background-color: #fff; /* Customize widget background color as needed */
   border: 1px solid #ccc; /* Customize widget border as needed */
   padding: 20px;
@@ -146,9 +146,9 @@ input[type="text"] {
   }
 }
 .close-button {
-  background-color: white;
+  background-color: #20293a;
   border-radius: 10px;
-  color: #18141d;
+  color: white;
   flex: 0 0 40px;
   letter-spacing: 0.5px;
   border: none;

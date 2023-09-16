@@ -47,24 +47,79 @@
   right: 10px; /* Adjust the distance from the right as needed */
   padding: 10px 20px; /* Add padding for the button */
   background-color: #007bff; /* Customize button styles as needed */
-  color: #fff;
-  border: none;
+  color: black;
+border: 1px solid black;
   border-radius: 5px;
   cursor: pointer;
   animation: zoomInOut 0.5s; /* Adjust the duration as needed */
   animation-fill-mode: forwards;
+  animation: zoom-in-zoom-out 2s ease infinite;
 }
-@keyframes zoomInOut {
+.search-btn::before{
+  animation: animatedgradient 3s ease infinite alternate;
+  left: -4px;
+  position: absolute;
+  top: -4px;
+  width: calc(100% + 8px);
+  background: linear-gradient(
+    60deg,
+    #ffb46a,
+    #ff9984,
+    #ff84a7,
+    #f09eff,
+    #97baff,
+    #7bedff,
+    #93fff1,
+    #a1ffb8
+  );
+  background-size: 300% 300%;
+  border-radius: 12px;
+  content: "";
+  border: 1px solid black;
+  z-index: -1;
+  height: calc(100% + 8px);
+}
+@keyframes animatedgradient {
   0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.1); /* Increase to your desired zoom level */
+    background-position: 0% 0%;
   }
   100% {
-    transform: scale(1);
+    background-position: 100% 100%;
+  }
+}
+@keyframes zoom-in-zoom-out {
+  0% {
+    transform: scale(0.5, 0.5);
+  }
+  50% {
+    transform: scale(1, 1);
+  }
+  100% {
+    transform: scale(0.5, 0.5);
   }
 }
 .home-page:hover .search-widget {
   display: block; /* Display the widget when hovering over the home page */
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 35vh;
+}
+
+.loader-spinner {
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

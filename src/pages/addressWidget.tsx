@@ -10,12 +10,23 @@ interface HashDetailsProps {
 }
 
 function truncateAddress(address: string): string {
-  if (address.length <= 15) {
+  if (address.length <=3) {
     return address;
   }
 
-  const start = address.slice(0, 8);
-  const end = address.slice(address.length - 8, address.length);
+  const start = address.slice(0, 3);
+  const end = address.slice(address.length - 3, address.length);
+
+  return `${start}...${end}`;
+}
+
+function truncateAdd(address: string): string {
+  if (address.length <=10) {
+    return address;
+  }
+
+  const start = address.slice(0, 10);
+  const end = address.slice(address.length - 10, address.length);
 
   return `${start}...${end}`;
 }
@@ -102,7 +113,7 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
             <div className="info-lable ">Address:</div>
             <div className="info-response-data add-color">
               {" "}
-              {truncateAddress(inputValue)}
+              {truncateAdd(inputValue)}
             </div>
           </div>
           <div className="info-item">
@@ -158,90 +169,27 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
           </div>
           <div className="info-item2">
             <div className="info-lable">Transactions</div>
-            <div className="" id="transaction-table">
+            <table className="" id="transaction-table">
+              <tbody>
+                <tr>
+                  <th>Hash</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                  <th>Block</th>
+                </tr>
               {transactionsData.length > 0
                 ? transactionsData.map((data: any, index: any) => (
-                    <div key={index} className="transaction-flex-main">
-                      <div className="transaction-flex">
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div>Hash:</div>
-                          <div
-                            style={{
-                              padding: "5px",
-                              fontSize: "13px",
-                              color: "#ffb46a",
-                            }}
-                          >
-                            {truncateAddress(data.txID)}
-                          </div>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div>Timestamp:</div>
-                          <div
-                            style={{
-                              padding: "5px",
-                              fontSize: "13px",
-                              color: "lightgray",
-                            }}
-                          >
-                            {data.block_timestamp}
-                          </div>
-                        </div>
-                      </div>
-                      <div className="transaction-flex">
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div>Block:</div>
-                          <div
-                            style={{
-                              padding: "5px",
-                              fontSize: "13px",
-                              color: "lightgray",
-                            }}
-                          >
-                            {data.blockNumber}
-                          </div>
-                        </div>
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                          }}
-                        >
-                          <div>Status:</div>
-                          <div
-                            style={{
-                              padding: "5px",
-                              fontSize: "13px",
-                              color: "#73bb73",
-                            }}
-                          >
-                            {data.ret[0].contractRet}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    <tr key={index} >
+                      <td>{truncateAddress(data.txID)}</td>
+                      <td>{data.block_timestamp}</td>
+                      <td>{data.blockNumber}</td>
+                      <td>{data.ret[0].contractRet}</td>
+                    </tr> 
                   ))
                 : "No transactions yet!"}{" "}
-            </div>
+              </tbody>
+              
+            </table>
           </div>
           {/* <div className="info-item2">
           <div className="info-lable">Delegated</div>

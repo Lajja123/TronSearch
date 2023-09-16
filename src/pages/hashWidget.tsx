@@ -10,12 +10,22 @@ interface HashDetailsProps {
 }
 
 function truncateAddress(address: string): string {
-  if (address.length <= 15) {
+  if (address.length <= 3) {
     return address;
   }
 
-  const start = address.slice(0, 8);
-  const end = address.slice(address.length - 8, address.length);
+  const start = address.slice(0, 3);
+  const end = address.slice(-3);
+
+  return `${start}...${end}`;
+}
+function truncateAdd(address: string): string {
+  if (address.length <= 10) {
+    return address;
+  }
+
+  const start = address.slice(0, 10);
+  const end = address.slice(-10);
 
   return `${start}...${end}`;
 }
@@ -75,7 +85,7 @@ const HashWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
         <div className="hash-details-main">
           <div className="info-item">
             <div className="info-lable ">Tx Hash:</div>
-            <div className="info-response-data add-color"> {inputValue}</div>
+            <div className="info-response-data add-color"> {truncateAdd(inputValue)}</div>
           </div>
           <div className="info-item">
             <div className="info-lable">Result:</div>

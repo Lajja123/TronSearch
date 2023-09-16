@@ -60,15 +60,16 @@ const Widget: React.FC<WidgetProps> = () => {
                 <option value="option2">Address</option>
                 <option value="option3">Hashvalue</option>
               </select>
-            </div>
-            <div>
+              
               <button
                 className="search-button"
                 onClick={handleSearchButtonClick}
               >
                 Search
               </button>
+            
             </div>
+            
           </div>
 
           {showDefaultWidgets && <CurrentAddressDetails />}

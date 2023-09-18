@@ -6,8 +6,8 @@
   border: 1px solid #ccc; /* Customize widget border as needed */
   padding: 20px;
   display: none; /* Initially hide the widget */
-  width: 50%;
-  max-width: 450px;
+  /* width: 50%; */
+  max-width: 500px;
   height: 500px;
   overflow: scroll;
   overflow-x: hidden;
@@ -72,6 +72,7 @@
 select {
   width: 100px; /* Adjust the width as needed */
   padding: 5px;
+  cursor: pointer;
   margin-right: 10px;
   background-color: #20293a;
   border: none;
@@ -103,6 +104,7 @@ input[type="text"] {
   width: 25%;
   padding: 10px 5px;
   height: 60%;
+  cursor: pointer;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
@@ -152,6 +154,7 @@ input[type="text"] {
   flex: 0 0 40px;
   letter-spacing: 0.5px;
   border: none;
+  cursor: pointer;
   padding: 10px 5px;
   text-align: center;
   text-decoration: none;

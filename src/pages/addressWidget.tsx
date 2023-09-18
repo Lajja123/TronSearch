@@ -10,7 +10,7 @@ interface HashDetailsProps {
 }
 
 function truncateAddress(address: string): string {
-  if (address.length <=3) {
+  if (address.length <= 3) {
     return address;
   }
 
@@ -21,7 +21,7 @@ function truncateAddress(address: string): string {
 }
 
 function truncateAdd(address: string): string {
-  if (address.length <=10) {
+  if (address.length <= 10) {
     return address;
   }
 
@@ -32,6 +32,9 @@ function truncateAdd(address: string): string {
 }
 
 const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
+  const [copySuccessMap, setCopySuccessMap] = useState<{
+    [key: string]: boolean;
+  }>({});
   const [selectedDataSource, setSelectedDataSource] = useState("From");
   const [basicData, setBasicData] = useState<any>();
   const [resourceData, setResourceData] = useState<any>();
@@ -106,6 +109,42 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
     getCurrentAccountData();
   }, []);
 
+  const handleCopyClick = (address: string) => {
+    const textArea = document.createElement("textarea");
+    textArea.value = address;
+    document.body.appendChild(textArea);
+    textArea.select();
+
+    try {
+      const copySuccess = document.execCommand("copy");
+      if (copySuccess) {
+        setCopySuccessMap((prevState) => ({
+          ...prevState,
+          [address]: true,
+        }));
+        setTimeout(() => {
+          setCopySuccessMap((prevState) => ({
+            ...prevState,
+            [address]: false,
+          }));
+        }, 1500); // Reset the "Copied!" message after 1.5 seconds
+      } else {
+        setCopySuccessMap((prevState) => ({
+          ...prevState,
+          [address]: false,
+        }));
+      }
+    } catch (error) {
+      console.error("Copy failed:", error);
+      setCopySuccessMap((prevState) => ({
+        ...prevState,
+        [address]: false,
+      }));
+    } finally {
+      document.body.removeChild(textArea);
+    }
+  };
+
   if (basicData && resourceData && transactionsData) {
     return (
       <div className="hash-value-widget">
@@ -116,6 +155,15 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
             <div className="info-response-data add-color">
               {" "}
               {truncateAdd(inputValue)}
+              {copySuccessMap[inputValue] ? (
+                <img src="./mark.png"></img>
+              ) : (
+                <img
+                  src="./copy.png"
+                  style={{ width: "12px" }}
+                  onClick={() => handleCopyClick(inputValue)}
+                ></img>
+              )}
             </div>
           </div>
           <div className="info-item">
@@ -127,7 +175,9 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
           <div className="info-item">
             <div className="info-lable">Create_Time:</div>
             <div className="info-response-data">
-              {basicData.create_time ? basicData.create_time : "Not Active"}
+              {basicData.create_time
+                ? new Date(basicData.create_time).toString()
+                : "Not Active"}
             </div>
           </div>
           <div className="info-item">
@@ -179,20 +229,39 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
                   <th aria-controls="dtHorizontalVerticalExample">Status</th>
                   <th aria-controls="dtHorizontalVerticalExample">Block</th>
                 </tr>
-                </thead>
-                <tbody>
-              {transactionsData.length > 0
-                ? transactionsData.map((data: any, index: any) => (
-                    <tr key={index} >
-                      <td>{truncateAddress(data.txID)}</td>
-                      <td>{data.block_timestamp}</td>
-                      <td>{data.blockNumber}</td>
-                      <td>{data.ret[0].contractRet}</td>
-                    </tr> 
-                  ))
-                : "No transactions yet!"}{" "}
+              </thead>
+              <tbody>
+                {transactionsData.length > 0
+                  ? transactionsData.map((data: any, index: any) => (
+                      <tr key={index}>
+                        <td
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                          }}
+                        >
+                          {truncateAddress(data.txID)}
+                          {copySuccessMap[data.txID] ? (
+                            <img
+                              src="./mark-white.png"
+                              style={{ width: "12px" }}
+                            ></img>
+                          ) : (
+                            <img
+                              src="./copy-white.png"
+                              style={{ width: "12px" }}
+                              onClick={() => handleCopyClick(data.txID)}
+                            ></img>
+                          )}
+                        </td>
+                        <td>{new Date(data.block_timestamp).toString()}</td>
+                        <td>{data.blockNumber}</td>
+                        <td>{data.ret[0].contractRet}</td>
+                      </tr>
+                    ))
+                  : "No transactions yet!"}{" "}
               </tbody>
-              
             </table>
           </div>
           {/* <div className="info-item2">
@@ -239,15 +308,39 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
             <table className="vote_table" id="voter-table">
               <thead>
                 <tr>
-                  <th aria-controls="dtHorizontalVerticalExample">Voter_address</th>
-                  <th aria-controls="dtHorizontalVerticalExample">Voter_count</th>
+                  <th aria-controls="dtHorizontalVerticalExample">
+                    Voter_address
+                  </th>
+                  <th aria-controls="dtHorizontalVerticalExample">
+                    Voter_count
+                  </th>
                 </tr>
-                </thead>
-                <tbody>
+              </thead>
+              <tbody>
                 {basicData.votes
                   ? basicData.votes.map((data: any, index: any) => (
                       <tr key={index}>
-                        <td>{truncateAddress(data.vote_address)}</td>
+                        <td
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-evenly",
+                          }}
+                        >
+                          {truncateAddress(data.vote_address)}
+                          {copySuccessMap[data.vote_address] ? (
+                            <img
+                              src="./mark-white.png"
+                              style={{ width: "12px" }}
+                            ></img>
+                          ) : (
+                            <img
+                              src="./copy-white.png"
+                              style={{ width: "12px" }}
+                              onClick={() => handleCopyClick(data.vote_address)}
+                            ></img>
+                          )}
+                        </td>
                         <td>{data.vote_count}</td>
                       </tr>
                     ))
@@ -259,9 +352,38 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
       </div>
     );
   } else {
-    return  <div className="loader-container">
-    <img className="loader-spinner" src="loading.png"></img>
-  </div>;
+    return (
+      <div className="loader-container">
+        <svg
+          width="40"
+          height="40"
+          viewBox="0 0 135 135"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#ffb46a"
+        >
+          <path d="M67.447 58c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm9.448 9.447c0 5.523 4.477 10 10 10 5.522 0 10-4.477 10-10s-4.478-10-10-10c-5.523 0-10 4.477-10 10zm-9.448 9.448c-5.523 0-10 4.477-10 10 0 5.522 4.477 10 10 10s10-4.478 10-10c0-5.523-4.477-10-10-10zM58 67.447c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10z">
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 67 67"
+              to="-360 67 67"
+              dur="1s"
+              repeatCount="indefinite"
+            />
+          </path>
+          <path d="M28.19 40.31c6.627 0 12-5.374 12-12 0-6.628-5.373-12-12-12-6.628 0-12 5.372-12 12 0 6.626 5.372 12 12 12zm30.72-19.825c4.686 4.687 12.284 4.687 16.97 0 4.686-4.686 4.686-12.284 0-16.97-4.686-4.687-12.284-4.687-16.97 0-4.687 4.686-4.687 12.284 0 16.97zm35.74 7.705c0 6.627 5.37 12 12 12 6.626 0 12-5.373 12-12 0-6.628-5.374-12-12-12-6.63 0-12 5.372-12 12zm19.822 30.72c-4.686 4.686-4.686 12.284 0 16.97 4.687 4.686 12.285 4.686 16.97 0 4.687-4.686 4.687-12.284 0-16.97-4.685-4.687-12.283-4.687-16.97 0zm-7.704 35.74c-6.627 0-12 5.37-12 12 0 6.626 5.373 12 12 12s12-5.374 12-12c0-6.63-5.373-12-12-12zm-30.72 19.822c-4.686-4.686-12.284-4.686-16.97 0-4.686 4.687-4.686 12.285 0 16.97 4.686 4.687 12.284 4.687 16.97 0 4.687-4.685 4.687-12.283 0-16.97zm-35.74-7.704c0-6.627-5.372-12-12-12-6.626 0-12 5.373-12 12s5.374 12 12 12c6.628 0 12-5.373 12-12zm-19.823-30.72c4.687-4.686 4.687-12.284 0-16.97-4.686-4.686-12.284-4.686-16.97 0-4.687 4.686-4.687 12.284 0 16.97 4.686 4.687 12.284 4.687 16.97 0z">
+            <animateTransform
+              attributeName="transform"
+              type="rotate"
+              from="0 67 67"
+              to="360 67 67"
+              dur="8s"
+              repeatCount="indefinite"
+            />
+          </path>
+        </svg>
+      </div>
+    );
   }
 };
 

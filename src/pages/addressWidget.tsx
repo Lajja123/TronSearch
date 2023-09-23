@@ -50,6 +50,7 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
   // call the apis to get the account data
   const getCurrentAccountData = async () => {
     try {
+      setLoading(true);
       // call the api to get the basic account data
       const response = await fetch(
         "https://api.trongrid.io/wallet/getaccount",
@@ -102,12 +103,13 @@ const AddressWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
       setLoading(false);
     } catch (error) {
       console.error("Error:", error);
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    getCurrentAccountData();
-  }, []);
+    if (inputValue) getCurrentAccountData();
+  }, [inputValue]);
 
   const handleCopyClick = (address: string) => {
     const textArea = document.createElement("textarea");

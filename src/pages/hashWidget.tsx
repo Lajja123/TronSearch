@@ -80,8 +80,8 @@ const HashWidget: React.FC<AddressWidgetProps> = ({ inputValue }) => {
   };
 
   useEffect(() => {
-    getTransactionData();
-  }, []);
+    if (inputValue) getTransactionData();
+  }, [inputValue]);
 
   const handleCopyClick = (address: string) => {
     const textArea = document.createElement("textarea");
